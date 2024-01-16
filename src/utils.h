@@ -32,7 +32,8 @@ using namespace Eigen;
 
 
 #define LOG(str) {                                              \
-	cout << str;                                                \
+	cout.rdbuf(cerr.rdbuf());				 \
+	cout << str << endl;;                                                \
 }
 
 #define CHECK_MSTATUS_AND_THROW(status) {                       \
