@@ -131,12 +131,68 @@ db.createJoints()
 db.applySkin()
 
 
+
+
+
+
+# Only solve helper bones using demLock attribute of the joints
+# -i="Bone_Helpers.fbx" -a="Bone_Anim.abc" --bindUpdate=1 
 db = dem_bones.DemBones()
-db.nBones = -1
 db.bindUpdate = 0
 db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
 db.createJoints()
 db.applySkin()
+
+
+# Partially solve skinning weights using per-vertex color attribute of the mesh
+# -i="Bone_PartiallySkinned.fbx" -a="Bone_Anim.abc" --nTransIters=0 
+db = dem_bones.DemBones()
+db.bindUpdate = 0
+db.num_transform_iterations = 0
+db.colourSet = "colorSet1"
+db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
+db.createJoints()
+db.applySkin()
+
+
+# Optimize given bone transformations and skinning weights from input meshes sequence
+# -i="Bone_All.fbx" -a="Bone_Anim.abc" --bindUpdate=1 
+db = dem_bones.DemBones()
+db.bindUpdate = 1
+db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
+db.createJoints()
+db.applySkin()
+
+
+# rem Solve bone transformations from input meshes sequence and input skinning weights
+# -i="Bone_Skin.fbx" -a="Bone_Anim.abc" --nWeightsIters=0 
+db = dem_bones.DemBones()
+db.bindUpdate = 0
+db.num_weight_iterations = 0
+db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
+db.createJoints()
+db.applySkin()
+
+
+# rem Joint grouping 
+# -i="Bone_Geom.fbx" -a="Bone_Anim.abc" -b=20 --bindUpdate=2
+db = dem_bones.DemBones()
+db.nBones = 5
+db.bindUpdate = 2
+db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
+db.createJoints()
+db.applySkin()
+
+
+# rem Solve skinning weights from input meshes sequence and input bone transformations
+# -i="Bone_Trans.fbx" -a="Bone_Anim.abc" --nTransIters=0 
+db = dem_bones.DemBones()
+db.num_transform_iterations = 0
+db.compute("Bone", "Bone_Anim_Bone", start_frame=1, end_frame=200)
+db.createJoints()
+db.applySkin()
+
+
 
 
 
