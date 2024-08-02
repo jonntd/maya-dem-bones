@@ -79,7 +79,7 @@ public:
 	bool cbIterEnd() {
 		double err = rmse();
 		LOG("    rmse = " << err << endl);
-		if ((err < prevErr * (1 + weightEps)) && ((prevErr - err) < tolerance * prevErr)) {
+		if ((err<prevErr*(1 + weightEps)) && ((prevErr - err)<tolerance*prevErr)) {
 			np--;
 			if (np == 0) {
 				LOG("  convergence is reached" << endl);
@@ -113,8 +113,6 @@ public:
 		MDoubleArray weights;
 		MDagPath boneParentMaya;
 		MDagPathArray bonesMaya;
-
-
 		map<string, MatrixXd, less<string>, aligned_allocator<pair<const string, MatrixXd>>> mT;
 		map<string, VectorXd, less<string>, aligned_allocator<pair<const string, VectorXd>>> wT;
 		map<string, Matrix4d, less<string>, aligned_allocator<pair<const string, Matrix4d>>> bindMatrices;
@@ -131,7 +129,7 @@ public:
 
 		u.resize(3, nV);
 
-#pragma omp parallel for
+		#pragma omp parallel for
 		for (int i = 0; i < nV; i++) {
 			MPoint point = points[i];
 			u.col(i) << point.x, point.y, point.z;
@@ -184,6 +182,7 @@ public:
 			}
 			LOG("    get bone weights" << endl);
 		}
+
 		parent.resize(nB);
 		bind.resize(nS * 4, nB * 4);
 		preMulInv.resize(nS * 4, nB * 4);
@@ -240,8 +239,7 @@ public:
 			}
 
 			// get bind matrix
-			//mT[name].resize(nF * 4, 4);
-			mT[name].resize(nF * 4, nB * 4);
+			mT[name].resize(nF * 4, 4);
 			Matrix4d bindMatrix = Conversion::toMatrix4D(bonesMaya[j].inclusiveMatrix());
 			bind.blk4(0, j) = bindMatrix;
 			bindMatrices[name] = bindMatrix;
@@ -345,6 +343,7 @@ public:
 			{
 				MFnDependencyNode node(bonesMaya[j].node(), &status);
 				CHECK_MSTATUS_AND_THROW(status);
+
 				MPlug plug = node.findPlug(transformAttributes[k], &status);
 				CHECK_MSTATUS_AND_THROW(status);
 				if (plug.isDestination())
@@ -360,13 +359,13 @@ public:
 
 		// report
 		LOG("extracted source" << endl);
-		LOG("===== vertices =====¡·¡·  " << nV  << endl);
+		LOG("===== vertices =====?，?，  " << nV  << endl);
 		//if (nB != 0) LOG("  " << nB << " joints" << endl);
 		//if (hasKeyFrame) LOG("  keyframes found" << endl);
 		//if (w.size() != 0) LOG("  skinning found" << endl);
-		LOG("===== joints =====¡·¡· " << nB  << endl);
-		LOG("===== keyframes found =====¡·¡· " << hasKeyFrame << endl);
-		LOG("===== skinning found =====¡·¡· " << w.size() << endl);
+		LOG("===== joints =====?，?， " << nB  << endl);
+		LOG("===== keyframes found =====?，?， " << hasKeyFrame << endl);
+		LOG("===== skinning found =====?，?， " << w.size() << endl);
 
 	}
 
@@ -716,7 +715,7 @@ public:
 	void applySkin()
 	{
 		LOG("===== applySkin =====  " << endl);
-		LOG("===== source_name =====¡·¡· " << source_name << endl);
+		LOG("===== source_name =====?，?， " << source_name << endl);
 
 		MDagPath m_targetMesh = Conversion::toMDagPath(source_name, false);
 
