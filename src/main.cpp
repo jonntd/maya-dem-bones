@@ -360,13 +360,13 @@ public:
 
 		// report
 		LOG("extracted source" << endl);
-		LOG("===== vertices =====》》  " << nV  << endl);
+		LOG("===== vertices =====隆路隆路  " << nV  << endl);
 		//if (nB != 0) LOG("  " << nB << " joints" << endl);
 		//if (hasKeyFrame) LOG("  keyframes found" << endl);
 		//if (w.size() != 0) LOG("  skinning found" << endl);
-		LOG("===== joints =====》》 " << nB  << endl);
-		LOG("===== keyframes found =====》》 " << hasKeyFrame << endl);
-		LOG("===== skinning found =====》》 " << w.size() << endl);
+		LOG("===== joints =====隆路隆路 " << nB  << endl);
+		LOG("===== keyframes found =====隆路隆路 " << hasKeyFrame << endl);
+		LOG("===== skinning found =====隆路隆路 " << w.size() << endl);
 
 	}
 
@@ -716,7 +716,7 @@ public:
 	void applySkin()
 	{
 		LOG("===== applySkin =====  " << endl);
-		LOG("===== source_name =====》》 " << source_name << endl);
+		LOG("===== source_name =====隆路隆路 " << source_name << endl);
 
 		MDagPath m_targetMesh = Conversion::toMDagPath(source_name, false);
 
@@ -910,7 +910,7 @@ private:
 } model;
 
 
-PYBIND11_MODULE(_dem_bones, m) {
+PYBIND11_MODULE(_core, m) {
 	py::class_<DemBonesModel>(m, "DemBones")
 		.def(py::init<>())
 		.def_readwrite("num_iterations", &DemBonesModel::nIters, "Number of global iterations, default = 30")
